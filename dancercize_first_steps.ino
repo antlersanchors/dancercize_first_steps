@@ -58,22 +58,24 @@ void loop() {
 void check_pos() {
 
   if ((step_pos1 != last_pos1) || (step_pos2 != last_pos2) && stepped == false ) { // if there is a change and we are not static, and one has not already stepped
-    stepped = true;  // say a step has happened
+    stepped = true;  // say a step has started
     start_timer = millis();
 
   }
 
   if (stepped == true) {
-    if (millis() - start_timer >= time_limit) { // if more than the allowed time has passed...
+    if (millis() - start_timer >= time_limit) { // if more than the allowed time has passed...  
+    Music.setGain1(1.0f);
+    Music.setFrequency1(800);
       if (millis() % 1000 == 0) {
         Serial.println("DANCE FAIL!");
-
       }
     }
   }
 
   if (step_pos1 == step_pos2) {
-    stepped = false; // if we are now on the same position, the step is complete
+    stepped = false; // if we are now on the same position, say the step is complete
+   
   }
   
   last_pos1 = step_pos1;
@@ -87,13 +89,13 @@ void slider1() {
 
   if (((slider1_xold <= 125) && (slider1_x > 125)) || ((slider1_xold >= 125) && (slider1_x < 125))) {
     Music.setGain1(1.0f);
-    Music.setFrequency1(293);
+    Music.setFrequency1(440);
 
     step_pos1 = 1;
   }
   if (((slider1_xold <= 375) && (slider1_x > 375)) || ((slider1_xold >= 375) && (slider1_x < 375))) {
     Music.setGain2(1.0f);
-    Music.setFrequency2(349);
+    Music.setFrequency2(440);
 
     step_pos1 = 2;
   }
@@ -105,7 +107,7 @@ void slider1() {
   }
   if (((slider1_xold <= 875) && (slider1_x > 875)) || ((slider1_xold >= 875) && (slider1_x < 875))) {
     Music.setGain1(1.0f);
-    Music.setFrequency1(466);
+    Music.setFrequency1(440);
 
     step_pos1 = 4;
   }
@@ -134,13 +136,13 @@ void slider2() {
 
   if (((slider2_xold <= 125) && (slider2_x > 125)) || ((slider2_xold >= 125) && (slider2_x < 125))) {
     Music.setGain1(1.0f);
-    Music.setFrequency1(293);
+    Music.setFrequency1(440);
 
     step_pos2 = 1;
   }
   if (((slider2_xold <= 375) && (slider2_x > 375)) || ((slider2_xold >= 375) && (slider2_x < 375))) {
     Music.setGain2(1.0f);
-    Music.setFrequency2(349);
+    Music.setFrequency2(440);
 
     step_pos2 = 2;
   }
@@ -152,7 +154,7 @@ void slider2() {
   }
   if (((slider2_xold <= 875) && (slider2_x > 875)) || ((slider2_xold >= 875) && (slider2_x < 875))) {
     Music.setGain1(1.0f);
-    Music.setFrequency1(466);
+    Music.setFrequency1(440);
 
     step_pos2 = 4;
   }
