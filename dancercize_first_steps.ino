@@ -30,6 +30,7 @@ void setup() {
   Music.setFrequency3(300);
 
   MotorA.init();
+  MotorB.init();
 
   Serial.begin(9600);
   slider1_x = analogRead(A1); // initialize x
@@ -56,7 +57,7 @@ void loop() {
 
 void check_pos() {
 
-  if (step_pos1 != last_pos1 && step_pos1 != 0 || step_pos2 != last_pos2 && step_pos2 != 0 && stepped == false) { // if there is a change and we are not static, and one has not already stepped
+  if ((step_pos1 != last_pos1) || (step_pos2 != last_pos2) && stepped == false ) { // if there is a change and we are not static, and one has not already stepped
     stepped = true;  // say a step has happened
     start_timer = millis();
 
@@ -69,19 +70,14 @@ void check_pos() {
 
       }
     }
-
-    if (step_pos1 == step_pos2) {
-      stepped == false; // if we are now on the same position, the step is complete
-    }
   }
 
+  if (step_pos1 == step_pos2) {
+    stepped = false; // if we are now on the same position, the step is complete
+  }
+  
   last_pos1 = step_pos1;
   last_pos2 = step_pos2;
-
-}
-
-void late() {
-
 }
 
 void slider1() {
@@ -118,7 +114,7 @@ void slider1() {
     Music.setGain2(0.9995f * Music.getGain2());
     Music.setGain3(0.9995f * Music.getGain3());
 
-//    step_pos1 = 0;
+    //    step_pos1 = 0;
   }
 
   slider1_xt = slider1_x % 250; //same force for each 250 ranage
@@ -165,7 +161,7 @@ void slider2() {
     Music.setGain2(0.9995f * Music.getGain2());
     Music.setGain3(0.9995f * Music.getGain3());
 
-//    step_pos2 = 0;
+    //    step_pos2 = 0;
   }
 
   slider2_xt = slider2_x % 250; //same force for each 250 ranage
@@ -174,7 +170,7 @@ void slider2() {
   if (slider2_xt > 80) slider2_F = - K * (100 - slider2_xt);
   if (slider2_xt > 120) slider2_F =  K * (140 - slider2_xt);
   if (slider2_xt > 140) slider2_F = 0;
-  MotorA.torque(slider2_F);
+  MotorB.torque(slider2_F);
 
 }
 
