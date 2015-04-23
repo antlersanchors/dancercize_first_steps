@@ -122,7 +122,7 @@ void slider1() {
 void slider2() {
 
   slider2_xold = slider2_x;
-  slider2_x =  analogRead(A1);
+  slider2_x =  analogRead(A9);
 
   if (((slider2_xold <= 125) && (slider2_x > 125)) || ((slider2_xold >= 125) && (slider2_x < 125))) {
     Music.setGain1(1.0f);
