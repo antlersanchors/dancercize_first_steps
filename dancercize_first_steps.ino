@@ -27,31 +27,29 @@ void setup(){
 
 void loop(){
   
-  slider(1);
-  // slider(2);
+  slider1();
+  slider2();
 
 }
 
-void slider(int sl_num){
-  
-  int num = sl_num;
-  
-  slider[num]_xold = slider[num]_x;
-  slider[num]_x =  analogRead(A1);
+void slider1(){
+ 
+ slider1_xold =slider1_x;
+ slider1_x =  analogRead(A1);
 
-if (((slider[num]_xold <= 125) && (slider[num]_x > 125)) || ((slider[num]_xold >= 125) && (slider[num]_x < 125))){
+if (((slider1_xold <= 125) && (slider1_x > 125)) || ((slider1_xold >= 125) && (slider1_x < 125))){
   Music.setGain1(1.0f);
   Music.setFrequency1(293);
 }
-if (((slider[num]_xold <= 375) && (slider[num]_x > 375)) || ((slider[num]_xold >= 375) && (slider[num]_x < 375))){
+if (((slider1_xold <= 375) && (slider1_x > 375)) || ((slider1_xold >= 375) && (slider1_x < 375))){
   Music.setGain2(1.0f);
   Music.setFrequency2(349);
 }
-if (((slider[num]_xold <= 625) && (slider[num]_x > 625)) || ((slider[num]_xold >= 625) && (slider[num]_x < 625))){
+if (((slider1_xold <= 625) && (slider1_x > 625)) || ((slider1_xold >= 625) && (slider1_x < 625))){
   Music.setGain3(1.0f);
   Music.setFrequency3(440);
 }
-if (((slider[num]_xold <= 875) && (slider[num]_x > 875)) || ((slider[num]_xold >= 875) && (slider[num]_x < 875))){
+if (((slider1_xold <= 875) && (slider1_x > 875)) || ((slider1_xold >= 875) && (slider1_x < 875))){
   Music.setGain1(1.0f);
   Music.setFrequency1(466);
   }
@@ -60,19 +58,51 @@ if (((slider[num]_xold <= 875) && (slider[num]_x > 875)) || ((slider[num]_xold >
     Music.setGain2(0.9995f*Music.getGain2());
     Music.setGain3(0.9995f*Music.getGain3());
   }
-  
 
+  slider1_xt = slider1_x % 250; //same force for each 250 ranage
+  slider1_F = 0;
+  if (slider1_xt > 60) slider1_F = - K * (slider1_xt - 60);
+  if (slider1_xt > 80) slider1_F = - K * (100 - slider1_xt);
+  if (slider1_xt > 120) slider1_F =  K * (140 - slider1_xt);
+  if (slider1_xt > 140) slider1_F = 0;
+  MotorA.torque(slider1_F);
+  
+}
 
-  slider[num]_xt = slider[num]_x % 250; //same force for each 250 ranage
-  slider[num]_F = 0;
-  if (slider[num]_xt > 60) slider[num]_F = - K * (slider[num]_xt - 60);
-  if (slider[num]_xt > 80) slider[num]_F = - K * (100 - slider[num]_xt);
-  if (slider[num]_xt > 120) slider[num]_F =  K * (140 - slider[num]_xt);
-  if (slider[num]_xt > 140) slider[num]_F = 0;
-  
-  MotorA.torque(slider[num]_F);
-  
-  
+void slider2(){
+ 
+ slider2_xold =slider2_x;
+ slider2_x =  analogRead(A1);
+
+if (((slider2_xold <= 125) && (slider2_x > 125)) || ((slider2_xold >= 125) && (slider2_x < 125))){
+  Music.setGain1(1.0f);
+  Music.setFrequency1(293);
+}
+if (((slider2_xold <= 375) && (slider2_x > 375)) || ((slider2_xold >= 375) && (slider2_x < 375))){
+  Music.setGain2(1.0f);
+  Music.setFrequency2(349);
+}
+if (((slider2_xold <= 625) && (slider2_x > 625)) || ((slider2_xold >= 625) && (slider2_x < 625))){
+  Music.setGain3(1.0f);
+  Music.setFrequency3(440);
+}
+if (((slider2_xold <= 875) && (slider2_x > 875)) || ((slider2_xold >= 875) && (slider2_x < 875))){
+  Music.setGain1(1.0f);
+  Music.setFrequency1(466);
+  }
+  else{
+    Music.setGain1(0.9995f*Music.getGain1());
+    Music.setGain2(0.9995f*Music.getGain2());
+    Music.setGain3(0.9995f*Music.getGain3());
+  }
+
+  slider2_xt = slider2_x % 250; //same force for each 250 ranage
+  slider2_F = 0;
+  if (slider2_xt > 60) slider2_F = - K * (slider2_xt - 60);
+  if (slider2_xt > 80) slider2_F = - K * (100 - slider2_xt);
+  if (slider2_xt > 120) slider2_F =  K * (140 - slider2_xt);
+  if (slider2_xt > 140) slider2_F = 0;
+  MotorA.torque(slider2_F);
   
 }
     
