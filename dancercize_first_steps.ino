@@ -12,6 +12,14 @@ int slider2_x, slider2_xold, slider2_xt, slider2_F; // input position x, output 
 int K = 10; // slope constant
 byte count; //for print count-down
 
+// new stuff for timing and comparison
+int step_pos1 = false;
+int step_pos2 = false;
+int time_limit = 1000;
+
+boolean out_of_sync = false;
+
+
 void setup(){
   Music.init();
   Music.setFrequency1(200);
@@ -32,31 +40,50 @@ void loop(){
 
 }
 
+void check_pos() {
+  if (stepping1 == 
+   
+}
+
+void late() {
+  
+}
+
 void slider1(){
  
- slider1_xold =slider1_x;
- slider1_x =  analogRead(A1);
+ slider1_xold = slider1_x;
+ slider1_x = analogRead(A1);
 
 if (((slider1_xold <= 125) && (slider1_x > 125)) || ((slider1_xold >= 125) && (slider1_x < 125))){
   Music.setGain1(1.0f);
   Music.setFrequency1(293);
+  
+  stepping1 = false;
 }
 if (((slider1_xold <= 375) && (slider1_x > 375)) || ((slider1_xold >= 375) && (slider1_x < 375))){
   Music.setGain2(1.0f);
   Music.setFrequency2(349);
+  
+  stepping1 = false;
 }
 if (((slider1_xold <= 625) && (slider1_x > 625)) || ((slider1_xold >= 625) && (slider1_x < 625))){
   Music.setGain3(1.0f);
   Music.setFrequency3(440);
+  
+  stepping1 = false;
 }
 if (((slider1_xold <= 875) && (slider1_x > 875)) || ((slider1_xold >= 875) && (slider1_x < 875))){
   Music.setGain1(1.0f);
   Music.setFrequency1(466);
+  
+  stepping1 = false;
   }
   else{
     Music.setGain1(0.9995f*Music.getGain1());
     Music.setGain2(0.9995f*Music.getGain2());
     Music.setGain3(0.9995f*Music.getGain3());
+    
+    stepping1 = true;
   }
 
   slider1_xt = slider1_x % 250; //same force for each 250 ranage
@@ -77,23 +104,33 @@ void slider2(){
 if (((slider2_xold <= 125) && (slider2_x > 125)) || ((slider2_xold >= 125) && (slider2_x < 125))){
   Music.setGain1(1.0f);
   Music.setFrequency1(293);
+  
+  stepping2 = false;
 }
 if (((slider2_xold <= 375) && (slider2_x > 375)) || ((slider2_xold >= 375) && (slider2_x < 375))){
   Music.setGain2(1.0f);
   Music.setFrequency2(349);
+  
+  stepping2 = false;
 }
 if (((slider2_xold <= 625) && (slider2_x > 625)) || ((slider2_xold >= 625) && (slider2_x < 625))){
   Music.setGain3(1.0f);
   Music.setFrequency3(440);
+  
+  stepping2 = false;
 }
 if (((slider2_xold <= 875) && (slider2_x > 875)) || ((slider2_xold >= 875) && (slider2_x < 875))){
   Music.setGain1(1.0f);
   Music.setFrequency1(466);
+  
+  stepping2 = false;
   }
   else{
     Music.setGain1(0.9995f*Music.getGain1());
     Music.setGain2(0.9995f*Music.getGain2());
     Music.setGain3(0.9995f*Music.getGain3());
+    
+    stepping2 = true;
   }
 
   slider2_xt = slider2_x % 250; //same force for each 250 ranage
