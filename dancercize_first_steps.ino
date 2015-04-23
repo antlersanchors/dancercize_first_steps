@@ -42,11 +42,14 @@ void loop() {
   slider2();
   check_pos();
 
-  if (millis() % 500 == 0) {
-    Serial.println("Slider 1 position:");
+  if (millis() % 1000 == 0) {
+    Serial.print("Slider 1 position:");
     Serial.println(step_pos1);
-    Serial.println("Slider 2 position:");
+    Serial.print("Slider 2 position:");
     Serial.println(step_pos2);
+    Serial.print("Stepped: ");
+    Serial.println(stepped);
+    Serial.println("---------------");
   }
 
 }
@@ -54,16 +57,16 @@ void loop() {
 void check_pos() {
 
   if (step_pos1 != last_pos1 && step_pos1 != 0 || step_pos2 != last_pos2 && step_pos2 != 0 && stepped == false) { // if there is a change and we are not static, and one has not already stepped
-
     stepped = true;  // say a step has happened
     start_timer = millis();
 
   }
 
-  if (stepped = true) {
+  if (stepped == true) {
     if (millis() - start_timer >= time_limit) { // if more than the allowed time has passed...
-      if (millis() % 500 == 0) {
+      if (millis() % 1000 == 0) {
         Serial.println("DANCE FAIL!");
+
       }
     }
 
@@ -115,7 +118,7 @@ void slider1() {
     Music.setGain2(0.9995f * Music.getGain2());
     Music.setGain3(0.9995f * Music.getGain3());
 
-    step_pos1 = 0;
+//    step_pos1 = 0;
   }
 
   slider1_xt = slider1_x % 250; //same force for each 250 ranage
@@ -162,7 +165,7 @@ void slider2() {
     Music.setGain2(0.9995f * Music.getGain2());
     Music.setGain3(0.9995f * Music.getGain3());
 
-    step_pos2 = 0;
+//    step_pos2 = 0;
   }
 
   slider2_xt = slider2_x % 250; //same force for each 250 ranage
