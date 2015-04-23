@@ -42,6 +42,13 @@ void loop() {
   slider2();
   check_pos();
 
+  if (millis() % 500 == 0) {
+    Serial.println("Slider 1 position:");
+    Serial.println(step_pos1);
+    Serial.println("Slider 2 position:");
+    Serial.println(step_pos2);
+  }
+
 }
 
 void check_pos() {
@@ -55,7 +62,9 @@ void check_pos() {
 
   if (stepped = true) {
     if (millis() - start_timer >= time_limit) { // if more than the allowed time has passed...
-      Serial.println("DANCE FAIL!");
+      if (millis() % 500 == 0) {
+        Serial.println("DANCE FAIL!");
+      }
     }
 
     if (step_pos1 == step_pos2) {
@@ -122,7 +131,7 @@ void slider1() {
 void slider2() {
 
   slider2_xold = slider2_x;
-  slider2_x =  analogRead(A9);
+  slider2_x = analogRead(A9);
 
   if (((slider2_xold <= 125) && (slider2_x > 125)) || ((slider2_xold >= 125) && (slider2_x < 125))) {
     Music.setGain1(1.0f);
